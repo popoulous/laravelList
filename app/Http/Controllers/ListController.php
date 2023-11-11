@@ -31,6 +31,6 @@ class ListController extends Controller
 
         $todos = TODO::GetTodos($this->pageSettings);
 
-        return View("todos" , ["todos" => $todos]);
+        return View("todo" , ["todos" => $todos]);
     }
 }
