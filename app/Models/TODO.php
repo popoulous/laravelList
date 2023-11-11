@@ -27,6 +27,10 @@ class TODO extends Model
 
     }
 
+    public static function GetAllTodosCount(){
+        return DB::table('todos')->count();
+    }
+
 
 
 

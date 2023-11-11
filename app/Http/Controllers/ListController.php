@@ -27,10 +27,10 @@ class ListController extends Controller
 
 
 
-
-
         $todos = TODO::GetTodos($this->pageSettings);
+        $alltodoscount = TODO::GetAllTodosCount();
+        $this->pageSettings["pagescount"] = round($alltodoscount/(int)$this->pageSettings["perpage"]);
 
-        return View("todo" , ["todos" => $todos]);
+        return View("todo" , ["todos" => $todos,"pagedata" => $this->pageSettings]);
     }
 }
