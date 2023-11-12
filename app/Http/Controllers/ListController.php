@@ -53,4 +53,51 @@ class ListController extends Controller
         return redirect()->to('/todo?id='.$todo->id);
 
     }
+
+    public function delete(Request $request)
+
+    {
+        $input = $request->all();
+
+        $request->validate([
+            'id' => 'required'
+        ]);
+
+        $todo = TODO::DeleteTodo($input);
+
+
+        return redirect()->to('/');
+
+    }
+
+    public function edit(Request $request)
+
+    {
+        $input = $request->all();
+
+        $request->validate([
+            'id' => 'required',
+            'name' => 'required|max:255',
+            'status' => 'required',
+            'description' => 'required|string|min:2|max:750'
+        ]);
+
+        $id = 0;
+        foreach ($input as $key => $value){
+            if($key == "id"){
+                $id = intval($value);
+                break;
+            }
+        }
+
+        $todo = TODO::find($id);
+        $todo->name = $request->input('name');
+        $todo->status = $request->input('status');
+        $todo->description = $request->input('description');
+        $todo->update();
+
+
+        return redirect()->to('/todo?id='.$todo->id);
+
+    }
 }

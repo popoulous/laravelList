@@ -44,8 +44,8 @@
                         <td>{{$value->description}}</td>
                         <td>{{$value->status}}</td>
                         <td>
-                            <a class="edit" title="" data-toggle="tooltip" data-original-title="Edit"><i class="fas fa-edit"></i></a>
-                            <a class="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i class="fas fa-trash"></i></a>
+                            <a data-bs-toggle="modal" data-bs-target="#editModal" class="edit" title="" href="id={{$value->id}}&_token={{ csrf_token() }}"><i class="fas fa-edit"></i></a>
+                            <a data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" class="delete" title="" href="delete?id={{$value->id}}"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                 @endforeach
@@ -81,16 +81,17 @@
 
     </div>
 
-    <!-- Modal HTML -->
+    <!-- New Record Modal HTML -->
     <div id="addNewModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
+                <form action="store" method="post">
                 <div class="modal-header">
                     <h5 class="modal-title">Confirmation</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="store" method="post">
+
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="form-group">
                             <label for="name">Name:</label>
@@ -106,18 +107,81 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="description">Example textarea</label>
+                            <label for="description">Description</label>
                             <textarea name="description" class="form-control" id="description" rows="3" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-default">Submit</button>
-                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Record Modal HTML -->
+    <div id="editModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="edit" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+
+                        <input type="hidden" name="id" value="">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" name="name" class="form-control" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select class="form-control" name="status" id="status" required>
+                                <option value="">-- Válasszon --</option>
+                                <option value="Fejlesztésre vár">Fejlesztésre vár</option>
+                                <option value="Folyamatban">Folyamatban</option>
+                                <option value="Kész">Kész</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea name="description" class="form-control" id="description" rows="3" required></textarea>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal HTML -->
+    <div id="deleteConfirmModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Really?</h6>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a id="delete_href" href="" class="btn btn-danger">Delete</a>
                 </div>
             </div>
         </div>
     </div>
+
+
 @endsection
 
 

@@ -15,7 +15,7 @@ class TODO extends Model
     private $sort = "DESC";
     protected $table = 'todos';
 
-    public $fillable = ['name', 'description', 'status'];
+    public $fillable = ['name', 'description', 'status','id'];
 
     public static function GetTodos($pageSettings){
         if(!empty($pageSettings["status"])){
@@ -28,11 +28,28 @@ class TODO extends Model
     }
 
     public static function GetTodoByID($id){
-        return DB::table('todos')->where('id', $id)->get()->toArray();
+        $todo = DB::table('todos')->where('id', $id)->get()->toArray();
+
+        if(!empty($todo[0])){
+            $todo = $todo[0];
+        }else{
+            $todo = array();
+        }
+
+        return $todo;
     }
 
     public static function GetAllTodosCount(){
         return DB::table('todos')->count();
+    }
+
+    public static function DeleteTodo($id){
+        DB::table('todos')->where('id', $id)->delete();
+    }
+
+    public static function edit($id,$data){
+        DB::table('todos')->where('id', $id)->update(array($data));
+        return TODO::GetTodoByID($id);
     }
 
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ListController;
 use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ListController::class, 'index']);
-Route::post('/store', [ListController::class, 'store']);
-Route::get('/todo', [TodoController::class, 'detail']);
+
+Route::get('/',         [ListController::class, 'index']);
+Route::get('/delete',   [ListController::class, 'delete']);
+Route::post('/store',   [ListController::class, 'store']);
+Route::post('/edit',     [ListController::class, 'edit']);
+
+Route::post('/ajax',    [AjaxController::class, 'get']);
+
+Route::get('/todo',     [TodoController::class, 'detail']);
