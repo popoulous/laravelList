@@ -22,6 +22,9 @@ class SendMail extends Mailable
         $this->fields = $fields;
     }
 
+    /**
+     * @return SendMail
+     */
     public function build()
     {
         return $this->view('mail.email',["fields" => $this->fields])

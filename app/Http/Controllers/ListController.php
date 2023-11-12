@@ -17,6 +17,7 @@ class ListController extends Controller
         "sort" => "DESC",
         "status" => "",
     );
+
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
@@ -37,7 +38,10 @@ class ListController extends Controller
         return View("layouts.todo" , ["todos" => $todos,"pagedata" => $this->pageSettings]);
     }
 
-
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
 
     {
@@ -61,9 +65,12 @@ class ListController extends Controller
         }
 
         return redirect()->to('/todo?id='.$todo->id);
-
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function delete(Request $request)
 
     {
@@ -73,13 +80,15 @@ class ListController extends Controller
             'id' => 'required'
         ]);
 
-        $todo = TODO::DeleteTodo($input);
-
+        TODO::DeleteTodo($input);
 
         return redirect()->to('/');
-
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function edit(Request $request)
 
     {

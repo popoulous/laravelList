@@ -9,6 +9,10 @@ class TodoController extends Controller
 {
     private $todo_id = 0;
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
+     */
     public function detail(Request $request){
 
         if(!empty($request) && !empty($request->get("id"))){

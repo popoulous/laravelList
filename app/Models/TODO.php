@@ -26,6 +26,10 @@ class TODO extends Model
         'assigned_users'
     ];
 
+    /**
+     * @param $pageSettings
+     * @return array
+     */
     public static function GetTodos($pageSettings){
         if(!empty($pageSettings["status"])){
             $todos = DB::table('todos')
@@ -49,6 +53,10 @@ class TODO extends Model
         return $todos;
     }
 
+    /**
+     * @param $id
+     * @return array
+     */
     public static function GetTodoByID($id){
         $todo = DB::table('todos')->where('id', $id)->get()->toArray();
 
@@ -61,28 +69,50 @@ class TODO extends Model
         return $todo;
     }
 
+    /**
+     * @return int
+     */
     public static function GetAllTodosCount(){
         return DB::table('todos')->count();
     }
 
+    /**
+     * @param $id
+     */
     public static function DeleteTodo($id){
         DB::table('todos')->where('id', $id)->delete();
     }
 
-    public static function edit($id,$data){
+    /**
+     * @param $id
+     * @param $data
+     * @return array
+     */
+    public static function edit($id, $data){
         DB::table('todos')->where('id', $id)->update(array($data));
         return TODO::GetTodoByID($id);
     }
 
+    /**
+     * @param $id
+     * @return array
+     */
     public static function GetTodoUsers($id){
         $todos = DB::table('users')->join("todo2users","users.id","=","todo2users.userid")->where('todo2users.todoid', $id)->get()->toArray();
         return $todos;
     }
 
-    public static function AddTodoUser($todoid,$userid){
+    /**
+     * @param $todoid
+     * @param $userid
+     */
+    public static function AddTodoUser($todoid, $userid){
         DB::table('todo2users')->insert(array("todoid" => $todoid,"userid" => $userid));
     }
 
+    /**
+     * @param $todoid
+     */
     public static function RemoveTodoUsers($todoid){
         DB::table('todo2users')->where("todoid", $todoid)->delete();
     }

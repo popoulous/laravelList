@@ -11,6 +11,10 @@ class AjaxController extends Controller
 {
     private $todo_id = "";
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index(Request $request){
         if(!empty($request->get("mode"))){
             $mode = $request->get("mode");
@@ -21,6 +25,11 @@ class AjaxController extends Controller
         }
     }
 
+    /**
+     * @param $mode
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     private function modeSwitcher($mode, Request $request){
         $request->request->remove('mode');
 
@@ -40,6 +49,10 @@ class AjaxController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     private function addUser(Request $request){
         $request->validate([
             'name' => 'required|max:255',
@@ -54,16 +67,27 @@ class AjaxController extends Controller
         return response()->json(array('msg'=> "success",'user' => $user), 200);
     }
 
+    /**
+     * @param $id
+     * @return array
+     */
     private function getUserByID($id){
         $user = User::GetUserByID($id);
         return $user;
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     private function getUsers(){
         $users = User::GetUsers();
         return response()->json(array('msg'=> "success",'users' => $users), 200);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     private function get(Request $request) {
         if(!empty($request) && !empty($request->get("id"))){
             $this->todo_id = intval($request->get("id"));

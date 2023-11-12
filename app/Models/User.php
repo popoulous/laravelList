@@ -31,6 +31,10 @@ class User extends Authenticatable
         'id'
     ];
 
+    /**
+     * @param $id
+     * @return array
+     */
     public static function GetUserByID($id){
         $user = DB::table('users')->where('id', $id)->get()->toArray();
 
@@ -43,6 +47,9 @@ class User extends Authenticatable
         return $user;
     }
 
+    /**
+     * @return array
+     */
     public static function GetUsers(){
         $todos = DB::table('users')->get()->toArray();
         return $todos;
