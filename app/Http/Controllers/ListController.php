@@ -31,6 +31,6 @@ class ListController extends Controller
         $alltodoscount = TODO::GetAllTodosCount();
         $this->pageSettings["pagescount"] = round($alltodoscount/(int)$this->pageSettings["perpage"]);
 
-        return View("todo" , ["todos" => $todos,"pagedata" => $this->pageSettings]);
+        return View("layouts.todo" , ["todos" => $todos,"pagedata" => $this->pageSettings]);
     }
 }
