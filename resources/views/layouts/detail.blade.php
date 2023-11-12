@@ -2,19 +2,22 @@
 
 @section('nav')
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-4">
             <a href="{{url('/')}}" class="btn btn-lg btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
         </div>
+        <div class="col-sm-4 text-center">
+            <h2>{{$todo->name}}</h2>
+        </div>
+        <div class="col-sm-4"></div>
     </div>
 @endsection
 
 @section('content')
-    @dump($todo)
     <div class="container">
 
         <div class="row table-title">
             <div class="col-sm-12">
-                <h2>Feladatok</h2>
+                <h3>Feladat</h3>
             </div>
         </div>
 
@@ -43,5 +46,7 @@
 
         </div>
     </div>
+
+    @include('layouts/assigned_users')
 
 @endsection

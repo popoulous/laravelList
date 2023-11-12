@@ -15,7 +15,16 @@ class TODO extends Model
     private $sort = "DESC";
     protected $table = 'todos';
 
-    public $fillable = ['name', 'description', 'status','id'];
+    protected $fillable = [
+        'name',
+        'description',
+        'status'
+    ];
+
+    protected $hidden = [
+        'id',
+        'assigned_users'
+    ];
 
     public static function GetTodos($pageSettings){
         if(!empty($pageSettings["status"])){
@@ -51,6 +60,17 @@ class TODO extends Model
         DB::table('todos')->where('id', $id)->update(array($data));
         return TODO::GetTodoByID($id);
     }
+
+    public static function GetTodoUsers($id){
+        $todos = DB::table('users')->join("todo2users","users.id","=","todo2users.userid")->where('todo2users.todoid', $id)->get()->toArray();
+        return $todos;
+    }
+
+    public static function AddTodoUser($todoid,$userid){
+        DB::table('todo2users')->insert(array("todoid" => $todoid,"userid" => $userid));
+    }
+
+
 
 
 

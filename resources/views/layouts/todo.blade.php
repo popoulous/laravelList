@@ -3,7 +3,7 @@
 @section('nav')
 <div class="row">
     <div class="col-sm-12">
-        <span>List</span>
+        <h3>List</h3>
     </div>
 </div>
 @endsection
@@ -112,31 +112,93 @@
                 </div>
                 <div class="modal-body">
 
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="assigned_users" value="">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" name="name" class="form-control" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select class="form-control" name="status" id="status" required>
+                            <option value="">-- Válasszon --</option>
+                            <option value="Fejlesztésre vár">Fejlesztésre vár</option>
+                            <option value="Folyamatban">Folyamatban</option>
+                            <option value="Kész">Kész</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea name="description" class="form-control" id="description" rows="3" required></textarea>
+                    </div>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4>Felelősök</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-striped table-bordered table-sm AssignedUsers" cellspacing="0" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th class="th-sm">Name</th>
+                                        <th class="th-sm">Email</th>
+                                        <th class="th-sm">Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button data-bs-toggle="modal" data-bs-target="#selectExistModal" type="button" class="btn btn-primary select_exist_user">Select exist user</button>
+                                <button data-bs-toggle="modal" data-bs-target="#addUserModal" type="button" class="btn btn-primary add_new_user">Add new user</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary cancel" data-bs-dismiss="modal">Cancel</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Record Modal HTML -->
+    <div id="addUserModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="useradd" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="form-group">
                             <label for="name">Name:</label>
                             <input type="text" name="name" class="form-control" id="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="status">Status</label>
-                            <select class="form-control" name="status" id="status" required>
-                                <option value="">-- Válasszon --</option>
-                                <option value="Fejlesztésre vár">Fejlesztésre vár</option>
-                                <option value="Folyamatban">Folyamatban</option>
-                                <option value="Kész">Kész</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea name="description" class="form-control" id="description" rows="3" required></textarea>
+                            <label for="email">email:</label>
+                            <input type="email" name="email" class="form-control" id="email" required>
                         </div>
 
-
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-secondary cancel" data-bs-dismiss="modal">Cancel</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -175,7 +237,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary cancel" data-bs-dismiss="modal">Cancel</button>
                 </div>
                 </form>
             </div>

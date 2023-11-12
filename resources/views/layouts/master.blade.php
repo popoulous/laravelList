@@ -15,16 +15,9 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                @yield('nav')
-            </a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!--Header section -->
-            </div>
-        </div>
-    </nav>
+    <div class="container bg-white shadow-sm py-4">
+        @yield('nav')
+    </div>
 
     <!--Content section -->
     <main class="py-4">

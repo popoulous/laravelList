@@ -22,6 +22,6 @@ Route::get('/delete',   [ListController::class, 'delete']);
 Route::post('/store',   [ListController::class, 'store']);
 Route::post('/edit',     [ListController::class, 'edit']);
 
-Route::post('/ajax',    [AjaxController::class, 'get']);
+Route::post('/ajax',    [AjaxController::class, 'index']);
 
 Route::get('/todo',     [TodoController::class, 'detail']);

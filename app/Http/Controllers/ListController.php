@@ -50,6 +50,14 @@ class ListController extends Controller
 
         $todo = TODO::create($input);
 
+        if(!empty($input["assigned_users"])){
+            $users = explode(",",$input["assigned_users"]);
+
+            foreach ($users as $userid){
+                TODO::AddTodoUser($todo->id,$userid);
+            }
+
+        }
 
         return redirect()->to('/todo?id='.$todo->id);
 

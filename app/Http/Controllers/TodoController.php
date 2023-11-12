@@ -16,7 +16,9 @@ class TodoController extends Controller
 
             $todo = TODO::GetTodoByID($this->todo_id);
 
-            return View("layouts.detail" , ["todo" => $todo]);
+            $users = TODO::GetTodoUsers($this->todo_id);
+
+            return View("layouts.detail" , ["todo" => $todo,"users" => $users]);
         }else{
             return redirect()->to('/');
         }
