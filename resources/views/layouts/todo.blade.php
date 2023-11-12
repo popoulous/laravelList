@@ -1,5 +1,13 @@
 @extends('layouts.master')
 
+@section('nav')
+<div class="row">
+    <div class="col-sm-12">
+        <span>List</span>
+    </div>
+</div>
+@endsection
+
 @section('content')
 
     @if (count($errors) > 0)
@@ -44,6 +52,7 @@
                         <td>{{$value->description}}</td>
                         <td>{{$value->status}}</td>
                         <td>
+                            <a class="detail" title="" href="todo?id={{$value->id}}"><i class="fas fa-eye"></i></a>
                             <a data-bs-toggle="modal" data-bs-target="#editModal" class="edit" title="" href="id={{$value->id}}&_token={{ csrf_token() }}"><i class="fas fa-edit"></i></a>
                             <a data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" class="delete" title="" href="delete?id={{$value->id}}"><i class="fas fa-trash"></i></a>
                         </td>
@@ -53,24 +62,35 @@
             </table>
             <nav>
                 <ul class="pagination justify-content-center">
-
+                    @if((int)$pagedata['page'] > 1)
+                        <li class="page-item">
+                            <a class="page-link" href="{{(int)$pagedata['page']-1}}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                    @endif
 
                     @for($i = 0; $i < $pagedata['pagescount'];$i++)
-                        @if($i+1 < (int)$pagedata['page']+5 && $i+1 > (int)$pagedata['page']-5)
-                            @if((int)$pagedata['page'] == $i+1)
-                                <li class="page-item active">
-                                    <a class="page-link" href="{{url('/')}}?page={{$i+1}}" tabindex="-1">{{$i+1}}</a>
-                                </li>
-                            @else
-                                <li class="page-item">
-                                    <a class="page-link" href="{{url('/')}}?page={{$i+1}}" tabindex="-1">{{$i+1}}</a>
-                                </li>
-                            @endif
-
-
-
+                        @if((int)$pagedata['page'] == $i+1)
+                            <li class="page-item active">
+                                <a class="page-link" href="{{url('/')}}?page={{$i+1}}" tabindex="-1">{{$i+1}}</a>
+                            </li>
+                        @else
+                            <li class="page-item">
+                                <a class="page-link" href="{{url('/')}}?page={{$i+1}}" tabindex="-1">{{$i+1}}</a>
+                            </li>
                         @endif
                     @endfor
+
+                    @if((int)$pagedata['page'] < (int)$pagedata['pagescount'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{url('/')}}?page={{(int)$pagedata['page']+1}}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    @endif
 
                 </ul>
             </nav>

@@ -1,14 +1,20 @@
 @extends('layouts.master')
 
+@section('nav')
+    <div class="row">
+        <div class="col-sm-12">
+            <a href="{{url('/')}}" class="btn btn-lg btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
+        </div>
+    </div>
+@endsection
+
 @section('content')
     @dump($todo)
     <div class="container">
+
         <div class="row table-title">
             <div class="col-sm-12">
                 <h2>Feladatok</h2>
-            </div>
-            <div class="col-sm-12">
-                <a href="{{url('/')}}" class="btn btn-lg btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
             </div>
         </div>
 
