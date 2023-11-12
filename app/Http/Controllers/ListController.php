@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendMail;
 use App\Models\TODO;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ListController extends Controller
 {
@@ -25,8 +28,6 @@ class ListController extends Controller
                 $this->pageSettings[$settingName] = !empty($request->get($settingName)) ? $request->get($settingName) : $this->pageSettings[$settingName];
             }
         }
-
-
 
         $todos = TODO::GetTodos($this->pageSettings);
         $alltodoscount = TODO::GetAllTodosCount();
@@ -103,6 +104,7 @@ class ListController extends Controller
         $todo->name = $request->input('name');
         $todo->status = $request->input('status');
         $todo->description = $request->input('description');
+        $changes = $todo->getDirty();
         $todo->update();
 
         if(isset($input["assigned_users"])){
@@ -112,12 +114,13 @@ class ListController extends Controller
 
             foreach ($users as $userid){
                 TODO::AddTodoUser($todo->id,$userid);
+
+                $user = User::GetUserByID($userid);
+                Mail::to($user["email"])->send(new SendMail($changes));
             }
 
         }
 
-
         return redirect()->to('/todo?id='.$todo->id);
-
     }
 }
