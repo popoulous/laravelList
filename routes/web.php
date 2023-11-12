@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ListController;
+use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [ListController::class, 'index']);
+Route::post('/store', [ListController::class, 'store']);
+Route::get('/todo', [TodoController::class, 'detail']);

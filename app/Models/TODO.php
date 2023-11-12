@@ -13,6 +13,9 @@ class TODO extends Model
     private $perpage = 10;
     private $page = 0;
     private $sort = "DESC";
+    protected $table = 'todos';
+
+    public $fillable = ['name', 'description', 'status'];
 
     public static function GetTodos($pageSettings){
         if(!empty($pageSettings["status"])){
@@ -22,9 +25,10 @@ class TODO extends Model
         }
 
         return $todos;
+    }
 
-
-
+    public static function GetTodoByID($id){
+        return DB::table('todos')->where('id', $id)->get()->toArray();
     }
 
     public static function GetAllTodosCount(){

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TODO;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ListController extends Controller
 {
@@ -32,5 +33,24 @@ class ListController extends Controller
         $this->pageSettings["pagescount"] = round($alltodoscount/(int)$this->pageSettings["perpage"]);
 
         return View("layouts.todo" , ["todos" => $todos,"pagedata" => $this->pageSettings]);
+    }
+
+
+    public function store(Request $request)
+
+    {
+        $input = $request->all();
+
+        $request->validate([
+            'name' => 'required|max:255',
+            'status' => 'required',
+            'description' => 'required|string|min:2|max:750'
+        ]);
+
+        $todo = TODO::create($input);
+
+
+        return redirect()->to('/todo?id='.$todo->id);
+
     }
 }
