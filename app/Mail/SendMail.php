@@ -54,7 +54,8 @@ class SendMail extends Mailable
 
     public function build()
     {
-        return $this->view('mail.email',["fields" => $this->fields])->from('laravellist@galambostamas.hu', 'Galambos Tamás')
-            ->subject('Teszt feladat');
+        return $this->view('mail.email',["fields" => $this->fields])
+            ->from('laravellist@galambostamas.hu', 'Galambos Tamás')
+            ->subject('Feladat változás');
     }
 }

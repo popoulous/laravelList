@@ -116,7 +116,7 @@ class ListController extends Controller
                 TODO::AddTodoUser($todo->id,$userid);
 
                 $user = User::GetUserByID($userid);
-                Mail::to($user["email"])->send(new SendMail($changes));
+                Mail::to($user->email)->send(new SendMail($changes));
             }
 
         }
