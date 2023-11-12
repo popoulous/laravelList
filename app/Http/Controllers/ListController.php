@@ -105,6 +105,17 @@ class ListController extends Controller
         $todo->description = $request->input('description');
         $todo->update();
 
+        if(isset($input["assigned_users"])){
+            TODO::RemoveTodoUsers($todo->id);
+
+            $users = explode(",",$input["assigned_users"]);
+
+            foreach ($users as $userid){
+                TODO::AddTodoUser($todo->id,$userid);
+            }
+
+        }
+
 
         return redirect()->to('/todo?id='.$todo->id);
 

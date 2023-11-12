@@ -33,7 +33,7 @@ class AjaxController extends Controller
 
                 break;
             case "get_users":
-                return $this->getUsers($request);
+                return $this->getUsers();
                 break;
             default:
                 return response()->json(array('msg'=> "A keresett mód nem található"), 404);
@@ -51,20 +51,17 @@ class AjaxController extends Controller
         $user = User::create($input);
         $user = $this->getUserByID($user->id);
 
-
         return response()->json(array('msg'=> "success",'user' => $user), 200);
-
-
     }
 
     private function getUserByID($id){
         $user = User::GetUserByID($id);
-
         return $user;
     }
 
     private function getUsers(){
-
+        $users = User::GetUsers();
+        return response()->json(array('msg'=> "success",'users' => $users), 200);
     }
 
     private function get(Request $request) {
@@ -72,12 +69,11 @@ class AjaxController extends Controller
             $this->todo_id = intval($request->get("id"));
 
             $todo = TODO::GetTodoByID($this->todo_id);
+            $users = TODO::GetTodoUsers($this->todo_id);
 
-            return response()->json(array('msg'=> "success",'todo' => $todo), 200);
+            return response()->json(array('msg'=> "success",'todo' => $todo,'users' => $users), 200);
         }else{
             return response()->json(array('msg'=> "A keresett feladat nem található"), 404);
         }
-
-
     }
 }

@@ -12,3 +12,9 @@
 .table-title .add-new i {
     margin-right: 4px;
 }
+#selectUserModal{
+    z-index: 10000;
+}
+#addUserModal{
+    z-index: 10000;
+}

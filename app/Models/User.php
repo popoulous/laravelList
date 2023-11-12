@@ -43,5 +43,10 @@ class User extends Authenticatable
         return $user;
     }
 
+    public static function GetUsers(){
+        $todos = DB::table('users')->get()->toArray();
+        return $todos;
+    }
+
 
 }

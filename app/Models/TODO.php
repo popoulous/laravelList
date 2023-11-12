@@ -28,9 +28,22 @@ class TODO extends Model
 
     public static function GetTodos($pageSettings){
         if(!empty($pageSettings["status"])){
-            $todos = DB::table('todos')->where('status', $pageSettings["status"])->orderBy('id',$pageSettings["sort"])->limit($pageSettings["perpage"])->offset(($pageSettings["page"] - 1) * $pageSettings["perpage"])->get()->toArray();
+            $todos = DB::table('todos')
+                ->select('todos.id','todos.name','todos.status',DB::raw("(SELECT count(userid) FROM todo2users WHERE todo2users.todoid = todos.id) as count"))
+                ->where('status', $pageSettings["status"])
+                ->orderBy('todos.id',$pageSettings["sort"])
+                ->limit($pageSettings["perpage"])
+                ->offset(($pageSettings["page"] - 1) * $pageSettings["perpage"])
+                ->get()
+                ->toArray();
         }else{
-            $todos = DB::table('todos')->orderBy('id',$pageSettings["sort"])->limit($pageSettings["perpage"])->offset(($pageSettings["page"] - 1) * $pageSettings["perpage"])->get()->toArray();
+            $todos = DB::table('todos')
+                ->select('todos.id','todos.name','todos.status',DB::raw("(SELECT count(userid) FROM todo2users WHERE todo2users.todoid = todos.id) as count"))
+                ->orderBy('todos.id',$pageSettings["sort"])
+                ->limit($pageSettings["perpage"])
+                ->offset(($pageSettings["page"] - 1) * $pageSettings["perpage"])
+                ->get()
+                ->toArray();
         }
 
         return $todos;
@@ -68,6 +81,10 @@ class TODO extends Model
 
     public static function AddTodoUser($todoid,$userid){
         DB::table('todo2users')->insert(array("todoid" => $todoid,"userid" => $userid));
+    }
+
+    public static function RemoveTodoUsers($todoid){
+        DB::table('todo2users')->where("todoid", $todoid)->delete();
     }
 
 
